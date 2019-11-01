@@ -3,12 +3,12 @@ import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 
-const serverUrl = process.env.NODE_ENV === 'development'
+const url = process.env.NODE_ENV === 'development'
   ? 'http://localhost:4000'
   : ''
 
 function App() {
-  const [ data, setData ] = useState(null)
+  const [ data, setData ] = useState([])
 
   useEffect(() => {
     axios.get(url + '/api/project/')
