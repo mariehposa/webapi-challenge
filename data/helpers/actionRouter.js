@@ -43,6 +43,18 @@ router.post('/', validateActionChanges, (req, res) => {
         })
 })
 
+router.put('/:id', validateActionId, validateActionChanges, (req, res) => {
+    actionDb.update(req.action.id, req.body)
+        .then(actionInfo => {
+            res.status(200).json(actionInfo)
+        })
+        .catch(error => {
+            res.status(400).json({
+                message: "missing required fields"
+            })
+        })
+})
+
 function validateActionId(req, res, next) {
     const { id } = req.params;
     actionDb.get(id)
