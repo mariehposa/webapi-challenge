@@ -21,7 +21,7 @@ function App() {
     <div className="App">
         <p>
          {
-           data.map(info => <h2>info.name</h2>)
+           data.map(info => <h2>{info.name}</h2>)
          }
         </p>
     </div>
