@@ -51,6 +51,22 @@ router.put('/:id', validateId, validateChanges, (req, res) => {
         })
 })
 
+router.post('/', validateChanges, (req, res) => {
+    const projectObject = {
+        name: req.body.name,
+        description: req.body.description
+    }
+    projectDb.insert(projectObject)
+        .then(post => {
+            res.status(201).json(post)
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "An error occured!"
+            })
+        })
+})
+
 function validateId(req, res, next) {
     const { id } = req.params;
     projectDb.get(id)
