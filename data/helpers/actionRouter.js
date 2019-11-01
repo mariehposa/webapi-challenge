@@ -55,6 +55,18 @@ router.put('/:id', validateActionId, validateActionChanges, (req, res) => {
         })
 })
 
+router.delete('/:id', validateActionId, (req, res) => {
+    actionDb.remove(req.action.id)
+        .then(action => {
+            res.status(200).json(action)
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "An error occured!"
+            })
+        })
+})
+
 function validateActionId(req, res, next) {
     const { id } = req.params;
     actionDb.get(id)
