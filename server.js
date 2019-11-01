@@ -8,14 +8,12 @@ const actionRouter = require('./data/helpers/actionRouter');
 server.use(helmet())
 server.use(cors())
 server.use(express.json())
-server.use(express.static(__dirname + '/client/build'))
 
 server.use('/api/project', logger, projectRouter)
 server.use('/api/action', logger, actionRouter)
 
-server.get('/', (req, res) => {
-    res.sendFile(__dirname + '/client/build/index.html')
-    console.log("its working")
+server.get('/', logger, (req, res) => {
+    res.send('Its working!')
 })
 
 function logger(req, res, next) {

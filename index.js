@@ -16,6 +16,11 @@ Go code!
 require('dotenv').config()
 const server = require('./server')
 
+server.use(express.static(__dirname + '/client/build'))
+server.get('/', (req, res) => {
+    res.sendFile(__dirname + '/client/build/index.html')
+})
+
 const port = process.env.PORT || 4000
 
 server.listen(port, () => {
