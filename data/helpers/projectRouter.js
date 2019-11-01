@@ -27,6 +27,18 @@ router.get('/:id', validateId, (req, res) => {
         })
 })
 
+router.delete('/:id', validateId, (req, res) => {
+    projectDb.remove(req.project.id)
+        .then(project => {
+            res.status(200).json(project)
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "An error occured!"
+            })
+        })
+})
+
 function validateId(req, res, next) {
     const { id } = req.params;
     projectDb.get(id)
