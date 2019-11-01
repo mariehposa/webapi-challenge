@@ -15,8 +15,17 @@ router.get('/', (req, res) => {
         })
 })
 
-function validateId() {
+function validateId(req, res, next) {
     const { id } = req.params;
+    projectDb.get(id)
+        .then(project => {
+            next()
+        })
+        .catch(err => {
+            res.status(404).json({
+                message: "id not found"
+            })
+        })
 }
 
 module.exports = router;
