@@ -51,6 +51,22 @@ router.put('/:id', validateId, validateChanges, (req, res) => {
         })
 })
 
+router.post('/', validateChanges, (req, res) => {
+    const projectObject = {
+        name: req.body.name,
+        description: req.body.description
+    }
+    projectDb.insert(projectObject)
+    .then(post => {
+        res.status(201).json(post)
+    })
+    .catch(err => {
+        res.status(500).json({
+            message: "An error occured!"
+        })
+    })
+})
+
 router.get('/:id/actions', validateId, (req, res) => {
     projectDb.getProjectActions(req.project.id)
         .then(action => {
@@ -58,22 +74,6 @@ router.get('/:id/actions', validateId, (req, res) => {
         })
         .catch(err => {
             res.status(500).json(err)
-        })
-})
-
-router.post('/', validateChanges, (req, res) => {
-    const projectObject = {
-        name: req.body.name,
-        description: req.body.description
-    }
-    projectDb.insert(projectObject)
-        .then(post => {
-            res.status(201).json(post)
-        })
-        .catch(err => {
-            res.status(500).json({
-                message: "An error occured!"
-            })
         })
 })
 
