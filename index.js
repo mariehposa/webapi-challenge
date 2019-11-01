@@ -14,3 +14,4 @@ Go code!
 */
 
 
+const server = require('./server')
