@@ -26,13 +26,24 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+1) Middleware
+2) Routing
+
 - [ ] Describe Middleware?
+
+Middleware is an array of functions that get executed in the order they are introduced into the server code. They are functions that get the request and response objects and can operate on them and either return the response or call the next middleware in the pipeline.
 
 - [ ] Describe a Resource?
 
+A resource is an object with a type, associated data, relationships to other resources, and a set of methods that operate on it. It defines the available data types and their behavior.
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+The API can return a response code of 200 to help the client know if a request was successful.
+
 - [ ] How can we partition our application into sub-applications?
+
+We can partition our application into sub-application by routing. It provides a way to break an application into smaller parts based on the route. We could have a router to serve our posts and another one to serve our users.
 
 ## Project Setup
 
