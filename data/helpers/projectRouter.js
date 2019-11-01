@@ -51,6 +51,16 @@ router.put('/:id', validateId, validateChanges, (req, res) => {
         })
 })
 
+router.get('/:id/actions', validateId, (req, res) => {
+    projectDb.getProjectActions(req.project.id)
+        .then(action => {
+            res.status(200).json(action)
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
+})
+
 router.post('/', validateChanges, (req, res) => {
     const projectObject = {
         name: req.body.name,
