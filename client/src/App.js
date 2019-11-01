@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 
@@ -15,15 +14,16 @@ function App() {
       .then(res => {
         setData(res.data)
       })
+      .catch(err => {
+        console.log(err.message)
+      })
   }, [])
 
   return (
     <div className="App">
-        <p>
          {
-           data.map(info => <h2>{info.name}</h2>)
+           data.map(info => <h2 key={info.id}>{info.name}</h2>)
          }
-        </p>
     </div>
   );
 }

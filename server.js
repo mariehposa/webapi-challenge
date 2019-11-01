@@ -16,12 +16,10 @@ server.use('/api/action', logger, actionRouter)
 //     res.send('Its working!')
 // })
 
-
 server.use(express.static(__dirname + '/client/build'))
 server.get('/', (req, res) => {
     res.sendFile(__dirname + '/client/build/index.html')
 })
-
 
 function logger(req, res, next) {
     console.log(req.method);
