@@ -12,9 +12,9 @@ server.use(express.json())
 server.use('/api/project', logger, projectRouter)
 server.use('/api/action', logger, actionRouter)
 
-server.get('/', logger, (req, res) => {
-    res.send('Its working!')
-})
+// server.get('/', logger, (req, res) => {
+//     res.send('Its working!')
+// })
 
 function logger(req, res, next) {
     console.log(req.method);

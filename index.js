@@ -14,6 +14,7 @@ Go code!
 */
 
 require('dotenv').config()
+const express = require('express');
 const server = require('./server')
 
 server.use(express.static(__dirname + '/client/build'))
