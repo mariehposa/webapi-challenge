@@ -39,6 +39,18 @@ router.delete('/:id', validateId, (req, res) => {
         })
 })
 
+router.put('/:id', validateId, validateChanges, (req, res) => {
+    projectDb.update(req.project.id, req.body)
+        .then(userInfo => {
+            res.status(200).json(userInfo)
+        })
+        .catch(error => {
+            res.status(400).json({
+                message: "missing required field"
+            })
+        })
+})
+
 function validateId(req, res, next) {
     const { id } = req.params;
     projectDb.get(id)
@@ -57,6 +69,22 @@ function validateId(req, res, next) {
                 message: "id not found"
             })
         })
+}
+
+function validateChanges (req, res, next) {
+    if (Object.keys(req.body).length) {
+        if(req.body.name && req.body.description) {
+            next ()
+        } else {
+            res.status(400).json({
+                message: "missing required fields"
+            })
+        }
+    } else {
+        res.status(400).json({
+            message: "missing required data"
+        })
+    }
 }
 
 module.exports = router;
