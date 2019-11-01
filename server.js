@@ -2,11 +2,13 @@ const express = require('express');
 const helmet = require('helmet');
 const server = express();
 const projectRouter = require('./data/helpers/projectRouter')
+const actionRouter = require('./data/helpers/actionModel');
 
 server.use(helmet())
 server.use(express.json())
 
 server.use('/api/project', logger, projectRouter)
+server.use('/api/action', logger, actionRouter)
 
 server.get('/', logger, (req, res) => {
     res.send('Its working!')
