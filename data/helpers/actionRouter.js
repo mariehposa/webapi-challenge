@@ -2,6 +2,9 @@ const express = require('express');
 const actionDb = require('./actionModel');
 const router = express.Router();
 
+const projectDb = require('./projectModel');
+
+
 router.get('/', (req, res) => {
     actionDb.get()
         .then(actions => {
@@ -26,11 +29,11 @@ router.get('/:id', validateActionId, (req, res) => {
         })
 })
 
-router.post('/', validateActionChanges, (req, res) => {
+router.post('/', [validateProjectId, validateActionChanges], (req, res) => {
     const actionObject = {
-        project_id: project_id,
-        description: description,
-        notes: notes
+        project_id: req.body.project_id,
+        description: req.body.description,
+        notes: req.body.notes
     }
     actionDb.insert(actionObject)
         .then(action => {
@@ -38,7 +41,7 @@ router.post('/', validateActionChanges, (req, res) => {
         })
         .catch(err => {
             res.status(500).json({
-                message: "An error occured!"
+                message: err.message
             })
         })
 })
@@ -101,6 +104,26 @@ function validateActionChanges (req, res, next) {
             message: "missing required data"
         })
     }
+}
+
+function validateProjectId(req, res, next) {
+    const id = req.body.project_id;
+    projectDb.get(id)
+        .then(project => {
+            if (project) {
+                req.project = project
+                next()
+            } else {
+                res.status(400).json({
+                    message: "invalid user id"
+                })
+            }
+        })
+        .catch(err => {
+            res.status(404).json({
+                message: "id not found"
+            })
+        })
 }
 
 
