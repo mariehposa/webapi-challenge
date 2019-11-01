@@ -26,6 +26,23 @@ router.get('/:id', validateActionId, (req, res) => {
         })
 })
 
+router.post('/', validateActionChanges, (req, res) => {
+    const actionObject = {
+        project_id: project_id,
+        description: description,
+        notes: notes
+    }
+    actionDb.insert(actionObject)
+        .then(action => {
+            res.status(201).json(action)
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "An error occured!"
+            })
+        })
+})
+
 function validateActionId(req, res, next) {
     const { id } = req.params;
     actionDb.get(id)
@@ -45,5 +62,22 @@ function validateActionId(req, res, next) {
             })
         })
 }
+
+function validateActionChanges (req, res, next) {
+    if (Object.keys(req.body).length) {
+        if(req.body.project_id && req.body.description && req.body.notes) {
+            next ()
+        } else {
+            res.status(400).json({
+                message: "missing required fields"
+            })
+        }
+    } else {
+        res.status(400).json({
+            message: "missing required data"
+        })
+    }
+}
+
 
 module.exports = router;
